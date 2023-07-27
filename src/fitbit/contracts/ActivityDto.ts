@@ -1,3 +1,0 @@
-interface ActivityDto {
-    dateTime: string;
-}

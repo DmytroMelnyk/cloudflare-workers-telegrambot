@@ -3,10 +3,10 @@
   "version": "1.0.0",
   "description": "Example project using TypeScript",
   "scripts": {
-    "dev": "wrangler dev --test-scheduled --remote=false --live-reload --env=dev --var ATLAS_APP_KEY:$(grep ATLAS_APP_KEY .env | cut -d '=' -f2)",
+    "dev": "wrangler dev --test-scheduled --remote=false --live-reload --env=dev --var TG_BOT_TOKEN:$(grep TG_BOT_TOKEN .env | cut -d '=' -f2)",
     "test": "npm run build && node --experimental-vm-modules --no-warnings node_modules/jest/bin/jest.js",
     "types:check": "tsc && tsc -p test/tsconfig.json",
-    "deploy": "wrangler deploy",
+    "deploy": "wrangler deploy --env=dev",
     "lock": "npm i --package-lock-only"
   },
   "keywords": [],
@@ -18,7 +18,6 @@
     "wrangler": "^3.0.0"
   },
   "dependencies": {
-    "@cloudflare/itty-router-openapi": "^0.1.10",
-    "realm-web": "^2.0.0"
+    "grammy": "^1.17.2"
   }
 }

@@ -1,25 +1,4 @@
-name = "fitbit"
+name = "telegram"
 main = "src/index.ts"
 compatibility_date = "2022-11-28"
 compatibility_flags = []
-kv_namespaces = [
-    { binding = "WORKER_DATA", id = "b954d632e8b94ec8bb50f5f53691381a" }
-]
-
-[triggers]
-crons = [
-    "0-7 * * * *",
-    "55 */6 * * *",
-]
-
-[vars]
-ATLAS_APP_ID = "application-0-nsnje"
-
-[env.dev]
-kv_namespaces = [
-    { binding = "WORKER_DATA", id = "N/A", preview_id = "N/A" },
-]
-
-[env.dev.vars]
-ATLAS_APP_ID = "application-0-nsnje"
-# echo <VALUE> | npx wrangler secret put ATLAS_APP_KEY --env dev
