@@ -6,6 +6,7 @@ export default {
 	fetch(request: Request, env: Env, context: ExecutionContext) {
 		const bot = new Bot(env.TG_BOT_TOKEN);
 		bot.command("start", async (ctx) => {
+			// https://stackoverflow.com/questions/37264827/telegram-bot-oauth-authorization
 			const keyboard = new Keyboard();
 
 			// Sending the component to the user

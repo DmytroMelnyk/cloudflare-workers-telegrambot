@@ -5,6 +5,12 @@ services:
     #ports:
     #  - "8443:8443" #port from infra-service    
   
-  infra-service:
-    image: hello-world:latest
-    network_mode: service:dev-container    
+  cloudflare:
+    image: cloudflare/cloudflared
+    network_mode: service:dev-container
+    command:
+      - tunnel
+      - --metrics
+      - localhost:55555
+      - --url
+      - http://localhost:8787
