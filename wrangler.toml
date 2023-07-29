@@ -1,4 +1,23 @@
 name = "telegram"
 main = "src/index.ts"
 compatibility_date = "2022-11-28"
-compatibility_flags = []
+# node_compat = true
+# compatibility_flags = [ "nodejs_compat" ]
+kv_namespaces = [
+    { binding = "BOT_SESSION_DATA", id = "aef7451f00994e9894679e4edef4d643" }
+]
+
+[vars]
+BOT_URL = "https://t.me/fit_logger_bot"
+GOOGLE_API_CLIENT_ID = "615657522406-dnqn4deso4i69ofasr6lvag01o1js0f3.apps.googleusercontent.com"
+GOOGLE_API_REDIRECT_URL = "https://telegram.iua.workers.dev/callback/google"
+
+[env.dev]
+kv_namespaces = [
+    { binding = "BOT_SESSION_DATA", id = "N/A", preview_id = "N/A" },
+]
+
+[env.dev.vars]
+BOT_URL = "https://t.me/fit_logger_bot"
+GOOGLE_API_CLIENT_ID = "615657522406-dnqn4deso4i69ofasr6lvag01o1js0f3.apps.googleusercontent.com"
+GOOGLE_API_REDIRECT_URL = "https://lan-mia-architect-achievement.trycloudflare.com/callback/google"

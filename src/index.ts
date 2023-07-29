@@ -1,23 +1,21 @@
 import './__global';
-import { Bot, webhookCallback, Keyboard, } from "grammy/web";
+import { webhookCallback } from "grammy/web";
 import { Env } from './env';
+import { error, json, Router } from 'itty-router';
+import { callback } from './routes/routers';
+import { startCommand, submitCommand } from './bot/commands';
+import { createBot } from './bot/settings';
+
+const router = Router();
+router.get("/callback/:apiProvider", callback);
+router.all('*', (request: Request, env: Env, context: ExecutionContext) => {
+	const bot = createBot(env);
+	bot.command("submit", submitCommand);
+	bot.command("start", startCommand);
+	return webhookCallback(bot, "cloudflare-mod")(request, env, context);
+});
 
 export default {
-	fetch(request: Request, env: Env, context: ExecutionContext) {
-		const bot = new Bot(env.TG_BOT_TOKEN);
-		bot.command("start", async (ctx) => {
-			// https://stackoverflow.com/questions/37264827/telegram-bot-oauth-authorization
-			const keyboard = new Keyboard();
-
-			// Sending the component to the user
-			keyboard.text("A").text("B").row();
-
-			await ctx.reply("Hey, pick a time!", {
-				reply_markup: keyboard,
-			});
-		});
-
-		return webhookCallback(bot, "cloudflare-mod")(request, env, context);
-	}
+	fetch: (request: Request, env: Env, context: ExecutionContext) =>
+		router.handle(request, env, context).then(json).catch(error)
 };
-

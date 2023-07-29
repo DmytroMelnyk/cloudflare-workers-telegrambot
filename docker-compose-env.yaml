@@ -11,6 +11,6 @@ services:
     command:
       - tunnel
       - --metrics
-      - localhost:55555
+      - 0.0.0.0:55555
       - --url
-      - http://localhost:8787
+      - http://127.0.0.1:8787
