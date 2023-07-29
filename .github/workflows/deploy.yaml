@@ -20,4 +20,5 @@ jobs:
             TG_BOT_TOKEN
         env:
           TG_BOT_TOKEN: ${{ secrets.TG_BOT_TOKEN }}
-      - run: curl https://api.telegram.org/bot${{ secrets.TG_BOT_TOKEN }}/setWebhook?url=https://$(grep -m 1 BOT_URL wrangler.toml | cut -d '"' -f 2)/
+      - name: Set telegram webhook
+        run: curl https://api.telegram.org/bot${{ secrets.TG_BOT_TOKEN }}/setWebhook?url=https://$(grep -m 1 BOT_URL wrangler.toml | cut -d '"' -f 2)/
