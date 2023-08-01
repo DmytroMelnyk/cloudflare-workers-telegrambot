@@ -37,7 +37,7 @@ export async function submitCommand(ctx: BotContext) {
 export async function testCommand(ctx: BotContext) {
 
     await ctx.reply("1", {
-        reply_markup: new InlineKeyboard().webApp("google", "https://pages-dev-d45.pages.dev/")
+        reply_markup: new InlineKeyboard().webApp("google", "https://workout-app-7y2.pages.dev/")
     });
 
 }

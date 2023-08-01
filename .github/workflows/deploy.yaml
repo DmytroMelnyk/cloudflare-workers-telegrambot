@@ -6,7 +6,7 @@ on:
       - main
 
 jobs:
-  deploy:
+  deploy-workers:
     runs-on: ubuntu-latest
     name: Deploy
     steps:
@@ -24,3 +24,22 @@ jobs:
           GOOGLE_API_CLIENT_SECRET: ${{ secrets.GOOGLE_API_CLIENT_SECRET }}
       - name: Set telegram webhook
         run: curl https://api.telegram.org/bot${{ secrets.TG_BOT_TOKEN }}/setWebhook?url=https://telegram.iua.workers.dev/
+
+  deploy-pages:
+    runs-on: ubuntu-latest
+    name: Deploy
+    permissions:
+      contents: read
+      deployments: write    
+    steps:
+      - uses: actions/checkout@v3
+      - run: cd workout-app && npm install && npm run build
+      - name: Publish
+        uses: cloudflare/pages-action@1
+        with:
+          apiToken: ${{ secrets.CF_API_TOKEN }}
+          accountId: ${{ secrets.CF_ACCOUNT_ID }}
+          projectName: workout-app
+          directory: workout-app/dist/workout-app
+          gitHubToken: ${{ secrets.GITHUB_TOKEN }}
+      
