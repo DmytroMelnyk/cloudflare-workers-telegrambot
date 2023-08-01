@@ -8,7 +8,7 @@ on:
 jobs:
   deploy-workers:
     runs-on: ubuntu-latest
-    name: Deploy
+    name: Deploy Workers
     steps:
       - uses: actions/checkout@v3
       - run: npm install
@@ -27,7 +27,7 @@ jobs:
 
   deploy-pages:
     runs-on: ubuntu-latest
-    name: Deploy
+    name: Deploy Pages
     permissions:
       contents: read
       deployments: write    
