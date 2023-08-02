@@ -1,12 +1,7 @@
 import { stateToDeepLink } from '../bot/deep_link';
+import { validate } from '../bot/web_app';
 import { Env } from '../env';
 import { IRequest } from 'itty-router';
-
-const corsHeaders = {
-    "Access-Control-Allow-Origin": "https://workout-app-7y2.pages.dev",
-    "Access-Control-Allow-Credentials": "true",
-    "Access-Control-Allow-Methods": "GET,HEAD,POST,OPTIONS",
-};
 
 export async function callback(request: IRequest, env: Env) {
     const code = request.query["code"] as string;
@@ -28,37 +23,23 @@ export async function callback(request: IRequest, env: Env) {
 export async function demoPost(request: IRequest, env: Env) {
     const body = await request.json();
     console.log(body);
-
-    // Handle CORS preflight requests.
-    return new Response('{"message": "ok"}', {
-        headers: {
-            ...corsHeaders,
-        },
-        status: 200
-    });
+    return new Response('{"message": "ok"}');
 }
 
-export async function demoPostOptions(request: IRequest, env: Env) {
-    if (
-        request.headers.get("Origin") !== null &&
-        request.headers.get("Access-Control-Request-Method") !== null &&
-        request.headers.get("Access-Control-Request-Headers") !== null
-    ) {
-        // Handle CORS preflight requests.
-        return new Response(null, {
-            headers: {
-                ...corsHeaders,
-                "Access-Control-Allow-Headers": request.headers.get(
-                    "Access-Control-Request-Headers"
-                ),
-            },
-        });
-    } else {
-        // Handle standard OPTIONS request.
-        return new Response(null, {
-            headers: {
-                Allow: "GET, HEAD, POST, OPTIONS",
-            },
+export async function checkInitData(request: IRequest, env: Env) {
+
+    const telegramInitData = await request.json();
+    const urlParams = new URLSearchParams(telegramInitData["_auth"]);
+    if (await validate(urlParams, env.TG_BOT_TOKEN)) {
+        return new Response(JSON.stringify({
+            ok: "check success"
+        }));
+    }
+    else {
+        return new Response(JSON.stringify({
+            error: "hash mismatch"
+        }), {
+            status: 401
         });
     }
 }
