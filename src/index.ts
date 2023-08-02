@@ -2,7 +2,7 @@ import './__global';
 import { webhookCallback } from "grammy/web";
 import { Env } from './env';
 import { error, json, Router } from 'itty-router';
-import { callback } from './routes/routers';
+import { callback, demoPost, demoPostOptions } from './routes/routers';
 import { startCommand, submitCommand, testCommand } from './bot/commands';
 import { BotContext, createBot } from './bot/settings';
 import { Menu } from '@grammyjs/menu';
@@ -30,6 +30,8 @@ const menu = new Menu<BotContext>("toggle")
 
 const router = Router();
 router.get("/callback/:apiProvider", callback);
+router.post("/demo/api", demoPost);
+router.options("/demo/api", demoPostOptions);
 router.all('*', (request: Request, env: Env, context: ExecutionContext) => {
 	const bot = createBot(env);
 	bot.use(menu);
