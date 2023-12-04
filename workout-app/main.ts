@@ -287,7 +287,7 @@ class DemoAppType {
         // return onCallback && onCallback({ error: 'This function (' + method + ') should send requests to your backend. Please, change this code to your own.' });
 
         const authData = this.initData || '';
-        fetch(`https://consultant-raw-theft-she.trycloudflare.com/${method}`, {
+        fetch(`https://telegram.iua.workers.dev/${method}`, {
             method: 'POST',
             body: JSON.stringify(Object.assign(data, {
                 _auth: authData,
