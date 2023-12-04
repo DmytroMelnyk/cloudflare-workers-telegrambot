@@ -1,7 +1,8 @@
 import { stateToDeepLink } from '../bot/deep_link';
 import { validate } from '../bot/web_app';
 import { Env } from '../env';
-import { IRequest } from 'itty-router';
+import { IRequest, error, json } from 'itty-router';
+import { TgBotRequest } from './tg_bot_request';
 
 export async function callback(request: IRequest, env: Env) {
     const code = request.query["code"] as string;
@@ -26,20 +27,20 @@ export async function demoPost(request: IRequest, env: Env) {
     return new Response('{"message": "ok"}');
 }
 
-export async function checkInitData(request: IRequest, env: Env) {
-
+export async function checkInitData(request: TgBotRequest, env: Env) {
     const telegramInitData = await request.json();
     const urlParams = new URLSearchParams(telegramInitData["_auth"]);
+    const chat_id = Number(JSON.parse(urlParams.get("user")!)["id"]);
+    await request.bot.api.sendMessage(chat_id, "message");
+
     if (await validate(urlParams, env.TG_BOT_TOKEN)) {
-        return new Response(JSON.stringify({
+        return json({
             ok: "check success"
-        }));
+        });
     }
     else {
-        return new Response(JSON.stringify({
+        return error(401, {
             error: "hash mismatch"
-        }), {
-            status: 401
         });
     }
 }

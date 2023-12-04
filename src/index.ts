@@ -1,11 +1,12 @@
 import './__global';
-import { webhookCallback } from "grammy/web";
+import { Bot, webhookCallback } from "grammy/web";
 import { Env } from './env';
-import { error, json, Router, createCors } from 'itty-router';
+import { error, json, Router, createCors, IRequest } from 'itty-router';
 import { callback, demoPost, checkInitData } from './routes/routers';
 import { startCommand, submitCommand, testCommand } from './bot/commands';
 import { BotContext, createBot } from './bot/settings';
 import { Menu } from '@grammyjs/menu';
+import { TgBotRequest } from './routes/tg_bot_request';
 
 const { preflight, corsify } = createCors({
 	origins: ['https://workout-app-7y2.pages.dev'],
@@ -13,6 +14,11 @@ const { preflight, corsify } = createCors({
 		"Access-Control-Allow-Credentials": "true",
 	}
 });
+
+const withTgBot = (request: TgBotRequest, env: Env) => {
+	const bot = createBot(env);
+	request.bot = bot;
+};
 
 // https://grammy.dev/plugins/menu
 const menu = new Menu<BotContext>("toggle")
@@ -35,10 +41,10 @@ const menu = new Menu<BotContext>("toggle")
 const router = Router();
 router.all('*', preflight);
 router.get("/callback/:apiProvider", callback);
-router.post("/demo/api", demoPost);
-router.post("/checkInitData", checkInitData);
-router.all('*', (request: Request, env: Env, context: ExecutionContext) => {
-	const bot = createBot(env);
+// router.post("/demo/api", demoPost);
+router.post<TgBotRequest>("/checkInitData", withTgBot, checkInitData);
+router.all<TgBotRequest>('*', withTgBot, (request: TgBotRequest, env: Env, context: ExecutionContext) => {
+	const bot = request.bot;
 	bot.use(menu);
 	bot.command("submit", submitCommand);
 	bot.command("start", startCommand);

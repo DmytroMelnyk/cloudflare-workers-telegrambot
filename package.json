@@ -4,22 +4,24 @@
   "description": "Example project using TypeScript",
   "scripts": {
     "dev": "wrangler dev --test-scheduled --port=8787 --remote=false --live-reload --env=dev --var TG_BOT_TOKEN:$(grep TG_BOT_TOKEN .env | cut -d '=' -f2) --var GOOGLE_API_CLIENT_SECRET:$(grep GOOGLE_API_CLIENT_SECRET .env | cut -d '=' -f2)",
-    "test": "npm run build && node --experimental-vm-modules --no-warnings node_modules/jest/bin/jest.js",
-    "types:check": "tsc && tsc -p test/tsconfig.json",
     "deploy": "wrangler deploy --env=dev",
-    "pages": "tsc ./workout-app/main.ts && wrangler pages deploy workout-app/ --project-name workout-app",
     "expose": "curl https://api.telegram.org/bot$(grep TG_BOT_TOKEN .env | cut -d '=' -f2)/setWebhook?url=https://$(curl -s http://localhost:55555/quicktunnel | jq -r '.hostname')/",
-    "lock": "npm i --package-lock-only"
+    "pages:build": "tsc ./workout-app/main.ts",
+    "pages:deploy": "wrangler pages deploy workout-app/ --project-name workout-app",
+    "types:check": "tsc && tsc -p test/tsconfig.json",
+    "lock": "npm i --package-lock-only",
+    "test": "npm run build && node --experimental-vm-modules --no-warnings node_modules/jest/bin/jest.js"
   },
   "keywords": [],
   "author": "",
   "license": "MIT",
   "devDependencies": {
+    "@angular/cli": "^16.0.0",
     "@cloudflare/workers-types": "^4.0.0",
     "@grammyjs/web-app": "^1.3.0",
     "vitest": "^0.31.0",
     "wrangler": "^3.0.0",
-    "@angular/cli": "^16.0.0"
+    "@edge-runtime/vm": "^3.0.4"
   },
   "dependencies": {
     "@grammyjs/menu": "^1.2.1",

@@ -40,4 +40,6 @@ export async function testCommand(ctx: BotContext) {
         reply_markup: new InlineKeyboard().webApp("google", "https://workout-app-7y2.pages.dev/")
     });
 
+    //ctx.api.answerWebAppQuery()
+
 }

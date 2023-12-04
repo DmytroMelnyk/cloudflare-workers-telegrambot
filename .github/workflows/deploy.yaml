@@ -33,7 +33,7 @@ jobs:
       deployments: write    
     steps:
       - uses: actions/checkout@v3
-      # - run: cd workout-app && npm install && npm run build
+      - run: npm install && npm run pages:build
       - name: Publish
         uses: cloudflare/pages-action@1
         with:

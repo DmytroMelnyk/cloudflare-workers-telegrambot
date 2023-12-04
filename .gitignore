@@ -3,3 +3,4 @@ dist
 .mf
 .wrangler
 .env
+workout-app/main.js
