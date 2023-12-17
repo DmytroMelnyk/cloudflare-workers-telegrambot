@@ -59,3 +59,7 @@ fuser -k 8787/tcp
 BARD API:
 https://makersuite.google.com/app/apikey
 https://ai.google.dev/tutorials/node_quickstart
+
+
+CLOUDFLARED PUBLIC IPS:
+https://www.cloudflare.com/ips/
