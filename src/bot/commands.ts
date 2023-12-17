@@ -60,8 +60,9 @@ export async function hearsWord(ctx: BotContext) {
 export async function bardResponse(ctx: BotContext) {
     const statusMessage = await ctx.reply("Processing...");
     const genAI = new GoogleGenerativeAI(ctx.config.BARD_API_TOKEN);
+    console.log("Done1");
     const model = genAI.getGenerativeModel({ model: "gemini-pro" });
-
+    console.log("Done2");
     // let chat = model.startChat({
     //     history: ctx.session.content,
     //     // generationConfig: {
@@ -70,6 +71,7 @@ export async function bardResponse(ctx: BotContext) {
     // });
     // const result = await chat.sendMessageStream(ctx.message?.text!);
     const result = await model.generateContentStream(ctx.message?.text!);
+    console.log("Done3");
     let text = "";
     for await (const chunk of result.stream) {
         const chunkText = chunk.text();
