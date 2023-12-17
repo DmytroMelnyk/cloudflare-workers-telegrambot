@@ -6,7 +6,7 @@ export function getLoginUrl(env: Env, state: string | undefined = undefined) {
         options: {
             clientId: env.GOOGLE_API_CLIENT_ID,
             redirectUrl: env.GOOGLE_API_REDIRECT_URL,
-            scope: "https://www.googleapis.com/auth/spreadsheets",
+            scope: ["https://www.googleapis.com/auth/spreadsheets"],
             state: state
         }
     });

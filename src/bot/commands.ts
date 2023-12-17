@@ -62,13 +62,14 @@ export async function bardResponse(ctx: BotContext) {
     const genAI = new GoogleGenerativeAI(ctx.config.BARD_API_TOKEN);
     const model = genAI.getGenerativeModel({ model: "gemini-pro" });
 
-    let chat = await model.startChat({
-        history: ctx.session.content,
-        // generationConfig: {
-        //     maxOutputTokens: 100,
-        // },
-    });
-    const result = await chat.sendMessageStream(ctx.message?.text!);
+    // let chat = model.startChat({
+    //     history: ctx.session.content,
+    //     // generationConfig: {
+    //     //     maxOutputTokens: 100,
+    //     // },
+    // });
+    // const result = await chat.sendMessageStream(ctx.message?.text!);
+    const result = await model.generateContentStream(ctx.message?.text!);
     let text = "";
     for await (const chunk of result.stream) {
         const chunkText = chunk.text();
