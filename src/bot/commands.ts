@@ -5,6 +5,7 @@ import { BotContext } from "./settings";
 import { getLoginUrl, requestOAuth2Token } from "../spreadsheets/gauth";
 import { retrieveStateFromDeepLink } from "./deep_link";
 import { Menu } from "@grammyjs/menu";
+import { GoogleGenerativeAI } from "@google/generative-ai";
 
 export async function startCommand(ctx: BotContext) {
     const deeplink_token = ctx.match as string;
@@ -41,5 +42,39 @@ export async function testCommand(ctx: BotContext) {
     });
 
     //ctx.api.answerWebAppQuery()
+}
 
+export async function hearsWord(ctx: BotContext) {
+    const statusMessage = await ctx.reply("Processing...");
+    const genAI = new GoogleGenerativeAI(ctx.config.BARD_API_TOKEN);
+    const model = genAI.getGenerativeModel({ model: "gemini-pro" });
+    const result = await model.generateContentStream("Write a story about a magic backpack.");
+    let text = "";
+    for await (const chunk of result.stream) {
+        const chunkText = chunk.text();
+        text += chunkText;
+        await statusMessage.editText(text);
+    }
+}
+
+export async function bardResponse(ctx: BotContext) {
+    const statusMessage = await ctx.reply("Processing...");
+    const genAI = new GoogleGenerativeAI(ctx.config.BARD_API_TOKEN);
+    const model = genAI.getGenerativeModel({ model: "gemini-pro" });
+
+    let chat = await model.startChat({
+        history: ctx.session.content,
+        // generationConfig: {
+        //     maxOutputTokens: 100,
+        // },
+    });
+    const result = await chat.sendMessageStream(ctx.message?.text!);
+    let text = "";
+    for await (const chunk of result.stream) {
+        const chunkText = chunk.text();
+        text += chunkText;
+        await statusMessage.editText(text);
+    }
+
+    // ctx.session.content = await chat.getHistory();
 }

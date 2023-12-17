@@ -22,7 +22,7 @@ https://developers.cloudflare.com/workers/tutorials/manage-projects-with-lerna/
 npm ll
 
 # install all packages
-npm install
+npm install --include=dev
 
 
 npx brainyduck --domain localhost --port 8443 --scheme http --graphql-domain localhost --graphql-port 8084
@@ -52,3 +52,10 @@ https://fauna.com/pricing
 https://www.mongodb.com/community/forums/t/bulk-write-operations-in-realm-node-js-sdk/118327/3
 
 TODO: Implement sleep
+
+Kill process that uses port:
+fuser -k 8787/tcp
+
+BARD API:
+https://makersuite.google.com/app/apikey
+https://ai.google.dev/tutorials/node_quickstart

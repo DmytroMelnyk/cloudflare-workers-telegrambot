@@ -1,14 +1,17 @@
 import { Context, SessionFlavor, Bot, lazySession, session } from "grammy/web";
 import { Env } from "../env";
 import { KvAdapter } from "@grammyjs/storage-cloudflare";
+import { HydrateFlavor } from "@grammyjs/hydrate";
+import { Content } from "@google/generative-ai";
 
-export type BotContext = Context & SessionFlavor<SessionData> & {
+export type BotContext = Context & SessionFlavor<SessionData> & HydrateFlavor<Context> & {
     config: Env;
 };
 
 // https://grammy.dev/plugins/session#storage-enhancements
 export interface SessionData {
     gapi_access_token: string | undefined;
+    content: Content[];
     firstExcersize: {
         set1RepetitionCount: number | undefined,
         set2RepetitionCount: number | undefined,

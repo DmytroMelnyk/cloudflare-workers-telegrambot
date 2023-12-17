@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Example project using TypeScript",
   "scripts": {
-    "dev": "wrangler dev --test-scheduled --port=8787 --remote=false --live-reload --env=dev --var TG_BOT_TOKEN:$(grep TG_BOT_TOKEN .env | cut -d '=' -f2) --var GOOGLE_API_CLIENT_SECRET:$(grep GOOGLE_API_CLIENT_SECRET .env | cut -d '=' -f2)",
+    "dev": "fuser -k 8787/tcp && wrangler dev --test-scheduled --port=8787 --remote=false --live-reload --env=dev --var TG_BOT_TOKEN:$(grep TG_BOT_TOKEN .env | cut -d '=' -f2) --var GOOGLE_API_CLIENT_SECRET:$(grep GOOGLE_API_CLIENT_SECRET .env | cut -d '=' -f2) --var BARD_API_TOKEN:$(grep BARD_API_TOKEN .env | cut -d '=' -f2)",
     "deploy": "wrangler deploy --env=dev",
     "expose": "curl https://api.telegram.org/bot$(grep TG_BOT_TOKEN .env | cut -d '=' -f2)/setWebhook?url=https://$(curl -s http://localhost:55555/quicktunnel | jq -r '.hostname')/",
     "pages:build": "tsc ./workout-app/main.ts",
@@ -17,17 +17,19 @@
   "license": "MIT",
   "devDependencies": {
     "@angular/cli": "^16.0.0",
-    "@cloudflare/workers-types": "^4.0.0",
+    "@cloudflare/workers-types": "^4.20231121.0",
+    "@edge-runtime/vm": "^3.1.7",
     "@grammyjs/web-app": "^1.3.0",
-    "vitest": "^0.31.0",
-    "wrangler": "^3.0.0",
-    "@edge-runtime/vm": "^3.0.4"
+    "vitest": "^1.0.4",
+    "wrangler": "^3.21.0"
   },
   "dependencies": {
+    "@google/generative-ai": "^0.1.2",
     "@grammyjs/menu": "^1.2.1",
-    "@grammyjs/storage-cloudflare": "^2.3.0",
-    "grammy": "^1.17.2",
-    "itty-router": "^4.0.14",
-    "worker-auth-providers": "^0.0.10-beta17"
+    "@grammyjs/hydrate": "^1.3.1",
+    "@grammyjs/storage-cloudflare": "^2.4.1",
+    "grammy": "^1.19.2",
+    "itty-router": "^4.0.23",
+    "worker-auth-providers": "^0.0.13-beta.4"
   }
 }
