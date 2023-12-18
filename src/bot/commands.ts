@@ -46,7 +46,7 @@ export async function testCommand(ctx: BotContext) {
 
 export async function hearsWord(ctx: BotContext) {
     const statusMessage = await ctx.reply("Processing...");
-    const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${ctx.config.BARD_API_TOKEN}`, {
+    const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/text-bison-001:generateText?key=${ctx.config.BARD_API_TOKEN}`, {
         method: 'POST',
         body: JSON.stringify({
             contents: [{
