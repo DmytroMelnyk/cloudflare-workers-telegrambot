@@ -46,7 +46,6 @@ router.get("/callback/:apiProvider", callback);
 router.post<TgBotRequest>("/checkInitData", withTgBot, checkInitData);
 router.all<TgBotRequest>('*', withTgBot, (request: TgBotRequest, env: Env, context: ExecutionContext) => {
 	const bot = request.bot;
-	console.log(request.headers.get("x-forwarded-for"));
 	bot.use(menu);
 	bot.use(hydrate());
 	bot.command("submit", submitCommand);
