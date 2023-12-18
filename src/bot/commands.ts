@@ -49,11 +49,9 @@ export async function hearsWord(ctx: BotContext) {
     const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/text-bison-001:generateText?key=${ctx.config.BARD_API_TOKEN}`, {
         method: 'POST',
         body: JSON.stringify({
-            contents: [{
-                parts: [{
-                    text: "Write a story about a magic backpack."
-                }]
-            }]
+            prompt: {
+                text: "Write a story about a magic backpack."
+            }
         }),
         headers: {
             'Content-Type': 'application/json'
