@@ -64,6 +64,8 @@ export async function hearsWord(ctx: BotContext) {
 }
 
 export async function bardResponse(ctx: BotContext) {
+    const resp = await fetch("https://ifconfig.me/");
+    console.log(resp.text());
     const statusMessage = await ctx.reply("Processing...");
     const genAI = new GoogleGenerativeAI(ctx.config.BARD_API_TOKEN);
     const model = genAI.getGenerativeModel({ model: "gemini-pro" });
