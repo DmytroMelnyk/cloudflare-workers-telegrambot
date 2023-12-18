@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Example project using TypeScript",
   "scripts": {
-    "dev": "fuser -k 8787/tcp && wrangler dev --test-scheduled --port=8787 --remote=false --live-reload --env=dev --var TG_BOT_TOKEN:$(grep TG_BOT_TOKEN .env | cut -d '=' -f2) --var GOOGLE_API_CLIENT_SECRET:$(grep GOOGLE_API_CLIENT_SECRET .env | cut -d '=' -f2) --var BARD_API_TOKEN:$(grep BARD_API_TOKEN .env | cut -d '=' -f2)",
+    "dev": "fuser -k 8787/tcp; wrangler dev --test-scheduled --port=8787 --remote=false --live-reload --env=dev --var TG_BOT_TOKEN:$(grep TG_BOT_TOKEN .env | cut -d '=' -f2) --var GOOGLE_API_CLIENT_SECRET:$(grep GOOGLE_API_CLIENT_SECRET .env | cut -d '=' -f2) --var BARD_API_TOKEN:$(grep BARD_API_TOKEN .env | cut -d '=' -f2)",
     "deploy": "wrangler deploy --env=dev",
     "expose": "curl https://api.telegram.org/bot$(grep TG_BOT_TOKEN .env | cut -d '=' -f2)/setWebhook?url=https://$(curl -s http://localhost:55555/quicktunnel | jq -r '.hostname')/",
     "pages:build": "tsc -p ./workout-app/tsconfig.json",
