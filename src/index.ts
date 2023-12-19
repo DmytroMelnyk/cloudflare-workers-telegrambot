@@ -4,7 +4,7 @@ import { hydrate } from "@grammyjs/hydrate";
 import { Env } from './env';
 import { error, json, Router, createCors, IRequest } from 'itty-router';
 import { callback, demoPost, checkInitData } from './routes/routers';
-import { startCommand, submitCommand, testCommand, hearsWord, bardResponse } from './bot/commands';
+import { startCommand, submitCommand, testCommand, hearsWord, hearsWord2, bardResponse } from './bot/commands';
 import { BotContext, createBot } from './bot/settings';
 import { Menu } from '@grammyjs/menu';
 import { TgBotRequest } from './routes/tg_bot_request';
@@ -53,6 +53,7 @@ router.all<TgBotRequest>('*', withTgBot, (request: TgBotRequest, env: Env, conte
 	bot.command("test", testCommand);
 	bot.command("menu", ctx => ctx.reply("Check out this menu:", { reply_markup: menu }));
 	bot.hears("X", hearsWord);
+	bot.hears("Y", hearsWord2);
 	bot.on("message", bardResponse);
 	return webhookCallback(bot, "cloudflare-mod")(request, env, context);
 });

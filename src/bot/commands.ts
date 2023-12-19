@@ -6,6 +6,7 @@ import { getLoginUrl, requestOAuth2Token } from "../spreadsheets/gauth";
 import { retrieveStateFromDeepLink } from "./deep_link";
 import { Menu } from "@grammyjs/menu";
 import { GoogleGenerativeAI } from "@google/generative-ai";
+import OpenAI from 'openai';
 
 export async function startCommand(ctx: BotContext) {
     const deeplink_token = ctx.match as string;
@@ -59,6 +60,23 @@ export async function hearsWord(ctx: BotContext) {
     });
 
     await statusMessage.editText(await response.text());
+}
+
+export async function hearsWord2(ctx: BotContext) {
+    const statusMessage = await ctx.reply("Processing...");
+
+    const openai = new OpenAI({
+        apiKey: ctx.config.CHAT_GPT_TOKEN, // This is the default and can be omitted
+    });
+
+    const stream = await openai.chat.completions.create({
+        model: 'gpt-3.5-turbo',
+        messages: [{ role: 'user', content: 'Say this is a test' }],
+        stream: true,
+    });
+    for await (const chunk of stream) {
+        statusMessage.editText(chunk.choices[0]?.delta?.content || '');
+    }
 }
 
 export async function bardResponse(ctx: BotContext) {

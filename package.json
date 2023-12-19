@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Example project using TypeScript",
   "scripts": {
-    "dev": "fuser -k 8787/tcp; wrangler dev --test-scheduled --port=8787 --remote=false --live-reload --env=dev --var TG_BOT_TOKEN:$(grep TG_BOT_TOKEN .env | cut -d '=' -f2) --var GOOGLE_API_CLIENT_SECRET:$(grep GOOGLE_API_CLIENT_SECRET .env | cut -d '=' -f2) --var BARD_API_TOKEN:$(grep BARD_API_TOKEN .env | cut -d '=' -f2)",
+    "dev": "fuser -k 8787/tcp; wrangler dev --test-scheduled --port=8787 --remote=false --live-reload --env=dev --var TG_BOT_TOKEN:$(grep TG_BOT_TOKEN .env | cut -d '=' -f2) --var GOOGLE_API_CLIENT_SECRET:$(grep GOOGLE_API_CLIENT_SECRET .env | cut -d '=' -f2) --var BARD_API_TOKEN:$(grep BARD_API_TOKEN .env | cut -d '=' -f2) --var CHAT_GPT_TOKEN:$(grep CHAT_GPT_TOKEN .env | cut -d '=' -f2)",
     "deploy": "wrangler deploy --env=dev",
     "expose": "curl https://api.telegram.org/bot$(grep TG_BOT_TOKEN .env | cut -d '=' -f2)/setWebhook?url=https://$(curl -s http://localhost:55555/quicktunnel | jq -r '.hostname')/",
     "pages:build": "tsc -p ./workout-app/tsconfig.json",
@@ -25,11 +25,12 @@
   },
   "dependencies": {
     "@google/generative-ai": "^0.1.2",
-    "@grammyjs/menu": "^1.2.1",
     "@grammyjs/hydrate": "^1.3.1",
+    "@grammyjs/menu": "^1.2.1",
     "@grammyjs/storage-cloudflare": "^2.4.1",
     "grammy": "^1.19.2",
     "itty-router": "^4.0.23",
+    "openai": "^4.23.0",
     "worker-auth-providers": "^0.0.13-beta.4"
   }
 }

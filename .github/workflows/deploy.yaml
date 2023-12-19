@@ -20,10 +20,12 @@ jobs:
             TG_BOT_TOKEN
             GOOGLE_API_CLIENT_SECRET
             BARD_API_TOKEN
+            CHAT_GPT_TOKEN
         env:
           TG_BOT_TOKEN: ${{ secrets.TG_BOT_TOKEN }}
           GOOGLE_API_CLIENT_SECRET: ${{ secrets.GOOGLE_API_CLIENT_SECRET }}
           BARD_API_TOKEN: ${{ secrets.BARD_API_TOKEN }}
+          CHAT_GPT_TOKEN: ${{ secrets.CHAT_GPT_TOKEN }}
       - name: Set telegram webhook
         run: curl https://api.telegram.org/bot${{ secrets.TG_BOT_TOKEN }}/setWebhook?url=https://telegram.iua.workers.dev/
 
