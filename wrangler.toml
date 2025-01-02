@@ -3,7 +3,7 @@ main = "src/index.ts"
 compatibility_date = "2022-11-28"
 # node_compat = true
 # compatibility_flags = [ "nodejs_compat" ]
-compatibility_flags = ["streams_enable_constructors"]
+compatibility_flags = ["streams_enable_constructors", "transformstream_enable_standard_constructor"]
 kv_namespaces = [
     { binding = "BOT_SESSION_DATA", id = "aef7451f00994e9894679e4edef4d643" }
 ]
