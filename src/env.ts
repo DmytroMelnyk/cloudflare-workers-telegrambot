@@ -1,4 +1,5 @@
 export interface Env {
+  AI: Ai;
   SCRAPER_API_KEY: string;
   BOT_URL: string;
   BARD_API_TOKEN: string;

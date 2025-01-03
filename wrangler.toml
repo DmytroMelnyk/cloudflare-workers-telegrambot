@@ -2,7 +2,7 @@ name = "telegram"
 main = "src/index.ts"
 compatibility_date = "2024-09-23"
 # node_compat = true
-# compatibility_flags = [ "nodejs_compat" ]
+compatibility_flags = [ "nodejs_compat" ]
 kv_namespaces = [
     { binding = "BOT_SESSION_DATA", id = "aef7451f00994e9894679e4edef4d643" }
 ]
